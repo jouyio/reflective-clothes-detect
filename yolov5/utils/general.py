@@ -934,8 +934,8 @@ def output_to_target(output, width, height):
                 y = box[1] / height + h / 2
                 conf = pred[4]
                 cls = int(pred[5])
-
-                targets.append([i, cls, x, y, w, h, conf])
+                #todo gpu张量解析报错，加上cpu
+                targets.append([i, cls, x.cpu(), y.cpu(), w.cpu(), h.cpu(), conf.cpu()])
 
     return np.array(targets)
 
@@ -945,8 +945,10 @@ def increment_dir(dir, comment=''):
     n = 0  # number
     dir = str(Path(dir))  # os-agnostic
     d = sorted(glob.glob(dir + '*'))  # directories
-    if len(d):
-        n = max([int(x[len(dir):x.find('_') if '_' in x else None]) for x in d]) + 1  # increment
+    # if len(d):
+    #     n = max([int(x[len(dir):x.find('_') if '_' in x else None]) for x in d]) + 1  # increment
+    n = len(d)
+
     return dir + str(n) + ('_' + comment if comment else '')
 
 

@@ -66,7 +66,7 @@ def test(data,
 
     # Configure
     model.eval()
-    with open(data) as f:
+    with open(data,'rb') as f:
         data = yaml.load(f, Loader=yaml.FullLoader)  # model dict
     check_dataset(data)  # check
     nc = 1 if single_cls else int(data['nc'])  # number of classes

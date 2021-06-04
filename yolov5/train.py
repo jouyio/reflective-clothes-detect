@@ -51,7 +51,7 @@ def train(hyp, opt, device, tb_writer=None):
     # Configure
     cuda = device.type != 'cpu'
     init_seeds(2 + rank)
-    with open(opt.data) as f:
+    with open(opt.data,'rb') as f:
         data_dict = yaml.load(f, Loader=yaml.FullLoader)  # model dict
     with torch_distributed_zero_first(rank):
         check_dataset(data_dict)  # check
